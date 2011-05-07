@@ -1,0 +1,68 @@
+
+<project name="common">
+
+
+<path id="thisClasspath">  
+    <fileset dir="../jars" >  
+        <include name="*.jar"/>  
+    </fileset>  
+    <fileset dir="../shared">
+        <include name="junit-4.9b2.jar"/>
+        <include name="log4j-1.2.15.jar"/>
+    </fileset>
+</path>
+
+  <target name="build">
+    <mkdir dir="bin" />
+    <mkdir dir="images"/>
+    
+    <javac srcdir="src" destdir="bin" debug="true" includeantruntime="false">
+      <classpath refid="thisClasspath"/>
+    </javac>
+    
+  </target>
+
+
+  <target name="run" depends="build">
+<delete dir="images"/><mkdir dir="images"/>
+    <java fork="true" classname="org.junit.runner.JUnitCore">
+        <arg value="TestGuitar"/>
+        <classpath>
+            <path refid="thisClasspath"/>
+            <path location="bin/"/>
+        </classpath>
+    </java>
+  </target>
+
+
+  <target name="clean">
+    <delete dir="bin" />
+    <delete dir="images"/>
+  </target>
+
+
+  <!-- Default dependency list (used for hg) -->
+  <property name="dependency_list" value="" />
+  <target name="depends">
+    <!-- Clone repositories (if necessary) -->
+    <exec executable="python">
+      <arg value="${shared.lib.dir}/python/checkout.py" />
+      <arg value="${dependency_list}" />
+    </exec>
+
+    <property name="target" value="build" />
+    <subant target="${target}">
+      <path refid="dependency_list.buildfiles" />
+    </subant>
+  </target>
+
+  <target name="help">
+    <echo message="Available targets for ${module}:" />
+    <echo message="  help:       Displays this help." />
+    <echo message="  clean:      Removes output files created by other targets." />
+    <echo message="  doc:        Generates documentation." />
+    <echo message="  build:      Builds source code and library." />
+    <echo message="  run:        Runs the JUnit tests for each applicable program."/>
+  </target>
+
+</project>
