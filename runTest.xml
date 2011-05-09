@@ -1,6 +1,15 @@
 
 <project name="common">
+<property name="cobertura.dir" value="../shared/cobertura"/>
 
+<path id="cobertura.classpath">
+    <fileset dir="${cobertura.dir}">
+        <include name="cobertura.jar" />
+        <include name="lib/**/*.jar" />
+    </fileset>
+</path>
+
+<taskdef classpathref="cobertura.classpath" resource="tasks.properties" />
 
 <path id="thisClasspath">  
     <fileset dir="../jars" >  
@@ -23,7 +32,7 @@
 
 
   <target name="run" depends="build">
-<delete dir="images"/><mkdir dir="images"/>
+<delete dir="../images"/><mkdir dir="../images"/>
    <!-- <java fork="true" classname="org.junit.runner.JUnitCore">
         <arg value="TestGuitar"/>
         <classpath>
@@ -37,6 +46,22 @@
 	<classpath>
             <path refid="thisClasspath"/>
             <path location="bin/"/>
+        </classpath>
+
+ <formatter type="brief" usefile="false"/> <formatter type="xml"/>
+<test todir="junit" name="TestGuitar"/>
+</junit>
+  </target>
+
+<target name="cobe-run" depends="instr-create">
+<delete dir="../images"/><mkdir dir="../images"/>
+
+<mkdir dir="junit"/>
+<junit printsummary="false" haltonfailure="true"> 
+	<classpath>
+            <path refid="thisClasspath"/>
+            <path location="instr/"/>
+            <path refid="cobertura.classpath"/>
         </classpath>
 
  <formatter type="brief" usefile="false"/> <formatter type="xml"/>
@@ -73,6 +98,15 @@
     <echo message="  doc:        Generates documentation." />
     <echo message="  build:      Builds source code and library." />
     <echo message="  run:        Runs the JUnit tests for each applicable program."/>
+  </target>
+
+<target name="instr-create" depends="build">
+    <mkdir dir="coverage" />
+    <cobertura-instrument
+       datafile="coverage/guitarTest.ser" todir="instr">
+      <fileset dir="bin" includes="*.class" />
+    </cobertura-instrument>
+
   </target>
 
 </project>

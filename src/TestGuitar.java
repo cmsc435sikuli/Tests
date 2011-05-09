@@ -43,7 +43,6 @@ public class TestGuitar extends TestCase {
 		
 		File[] files = directory.listFiles();
 		for (File file : files) {
-
 			assertTrue(file.delete());
 		}
 		ComponentStub component = new ComponentStub(-21, -21, 20, 20);
