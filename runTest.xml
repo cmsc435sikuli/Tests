@@ -7,8 +7,7 @@
         <include name="*.jar"/>  
     </fileset>  
     <fileset dir="../shared">
-        <include name="junit-4.9b2.jar"/>
-        <include name="log4j-1.2.15.jar"/>
+        <include name="*.jar"/>
     </fileset>
 </path>
 
@@ -25,13 +24,24 @@
 
   <target name="run" depends="build">
 <delete dir="images"/><mkdir dir="images"/>
-    <java fork="true" classname="org.junit.runner.JUnitCore">
+   <!-- <java fork="true" classname="org.junit.runner.JUnitCore">
         <arg value="TestGuitar"/>
         <classpath>
             <path refid="thisClasspath"/>
             <path location="bin/"/>
         </classpath>
     </java>
+-->
+<mkdir dir="junit"/>
+<junit printsummary="false" haltonfailure="true"> 
+	<classpath>
+            <path refid="thisClasspath"/>
+            <path location="bin/"/>
+        </classpath>
+
+ <formatter type="brief" usefile="false"/> <formatter type="xml"/>
+<test todir="junit" name="TestGuitar"/>
+</junit>
   </target>
 
 
