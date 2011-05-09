@@ -19,7 +19,6 @@ public class EventTypeStub extends EventType{
 		optional1 = option;
 	}
 	
-	@Override
 	public String getEventId(){
 		return eventId1;
 	}

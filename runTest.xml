@@ -18,6 +18,10 @@
     <fileset dir="../shared">
         <include name="*.jar"/>
     </fileset>
+	<fileset dir="../shared/cobertura">
+        <include name="*.jar"/>
+    </fileset>
+
 </path>
 
   <target name="build">
