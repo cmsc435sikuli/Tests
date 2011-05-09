@@ -467,20 +467,4 @@ public class TestGuitar extends TestCase {
 		assertEquals(answerString,null);
 	}	
 		
-	/*
-	 * Tests the function that clicks on an image given the image name
-	 */
-	public void testReplayerClick() throws Exception{
-		boolean answerBool = false;
-		Replayer replayer = new Replayer(null, "GUITAR-Default.GUI", "efg.efg");
-		answerBool = replayer.findAndClickImage("bad image name");
-		assertEquals(answerBool,false);
-		
-		answerBool = replayer.findAndClickImage("images\\0before_click.png");
-		assertEquals(answerBool,false);
-		
-		answerBool = replayer.findAndClickImage("images\\9after_click.png");
-		assertEquals(answerBool,false);
-	}
-
-}
+}	
