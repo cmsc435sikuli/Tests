@@ -1,10 +1,14 @@
 import java.awt.*;
+import edu.umd.cs.guitar.util.GUITARLog;
 
 import javax.swing.*;
+import javax.xml.parsers.ParserConfigurationException;
+import org.sikuli.script.Screen;
+import org.xml.sax.SAXException;
 
 import java.io.*;
-
 import java.util.List;
+import java.util.logging.Logger;
 
 import junit.framework.TestCase;
 import edu.umd.cs.guitar.model.data.AttributesType;
@@ -12,12 +16,14 @@ import edu.umd.cs.guitar.model.GWindow;
 import edu.umd.cs.guitar.model.JFCXComponent;
 import edu.umd.cs.guitar.model.JFCXWindow;
 import edu.umd.cs.guitar.model.data.ComponentType;
+import edu.umd.cs.guitar.model.data.EventType;
+import edu.umd.cs.guitar.model.data.StepType;
 import edu.umd.cs.guitar.ripper.Ripper;
+import edu.umd.cs.guitar.replayer.Replayer;
 import edu.umd.cs.guitar.model.data.PropertyType;
 
 
 public class TestGuitar extends TestCase {
-	
 	
 	public Window CreateWindow(){
 		Window wind = new JFrame();
@@ -415,4 +421,66 @@ public class TestGuitar extends TestCase {
 		String[] list = directory.list();
 		assertTrue(list.length == 1);
 	}
+
+	public void testReplayerBasic() throws Exception{
+		Replayer replayer = null;
+		try {
+			replayer = new Replayer(null, "GUITAR-Default.GUI", "efg.efg");
+			assertTrue(true);
+		} catch (FileNotFoundException e) {
+			assertTrue(false);
+		}
+		try{
+			replayer.execute();
+			//shouldn't get here due to exception
+			assertTrue(false);
+		}catch (NullPointerException e){
+			//Since there is no TestCase execute fails
+			assertTrue(true);
+		}
+		
+	}
+	
+	/*
+	 * Tests the function that gets the ImageFileName from widgetID and Type of image
+	 */
+	public void testReplayerImageName() throws Exception{
+		String answerString = null;
+		Replayer replayer = new Replayer(null, "GUITAR-Default.GUI", "efg.efg");
+		
+		answerString = replayer.getImageFileName(null, "Not correct");
+		assertEquals(answerString,null);
+		
+		answerString = replayer.getImageFileName(null, "Image");
+		assertEquals(answerString,null);
+		
+		answerString = replayer.getImageFileName("Incorrect ID", "Image");
+		assertEquals(answerString,null);
+		
+		answerString = replayer.getImageFileName("w983468896", "AfterImage");
+		assertEquals(answerString,"images\\11after_click.png");
+		
+		answerString = replayer.getImageFileName("w983468896", "BeforeImage");
+		assertEquals(answerString,"images\\11before_click.png");
+		
+		answerString = replayer.getImageFileName("w983468896", "Image");
+		assertEquals(answerString,null);
+	}	
+		
+	/*
+	 * Tests the function that clicks on an image given the image name
+	 */
+	public void testReplayerClick() throws Exception{
+		boolean answerBool = false;
+		Replayer replayer = new Replayer(null, "GUITAR-Default.GUI", "efg.efg");
+		answerBool = replayer.findAndClickImage("bad image name");
+		assertEquals(answerBool,false);
+		
+		answerBool = replayer.findAndClickImage("images\\0before_click.png");
+		assertEquals(answerBool,false);
+		
+		answerBool = replayer.findAndClickImage("images\\9after_click.png");
+		assertEquals(answerBool,false);
+	}
+
 }
