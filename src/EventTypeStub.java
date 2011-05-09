@@ -3,58 +3,58 @@ import edu.umd.cs.guitar.model.data.EventType;
 
 public class EventTypeStub extends EventType{
 
-	String eventId;
-	String widgetId;
-	String type;
-	boolean initial;
-	String action;
-	AttributesType optional;
+	String eventId1;
+	String widgetId1;
+	String type1;
+	boolean initial1;
+	String action1;
+	AttributesType optional1;
 	
 	public EventTypeStub(String eId, String wId, String typ, boolean init, String act, AttributesType option){
-		this.eventId = eId;
-		this.widgetId = wId;
-		this.type = typ;
-		this.initial = init;
-		this.action = act;
-		this.optional = option;
+		eventId1 = eId;
+		widgetId1 = wId;
+		type1 = typ;
+		initial1 = init;
+		action1 = act;
+		optional1 = option;
 	}
 	
 	@Override
 	public String getEventId(){
-		return eventId;
+		return eventId1;
 	}
 	public void setEventId(String id){
-		eventId = id;
+		eventId1 = id;
 	}
 	public String getWidgetId(){
-		return widgetId;
+		return widgetId1;
 	}
 	public void setWidgetId(String id){
-		widgetId = id;
+		widgetId1 = id;
 	}
 	public String getType(){
-		return type;
+		return type1;
 	}
 	public void setType(String typ){
-		type = typ;
+		type1 = typ;
 	}
 	public boolean isInitial(){
-		return initial;
+		return initial1;
 	}
 	public void setInitial(boolean init){
-		initial = init;
+		initial1 = init;
 	}
 	public String getAction(){
-		return action;
+		return action1;
 	}
 	public void setAction(String act){
-		action = act;
+		action1 = act;
 	}
 	public AttributesType getOptional(){
-		return optional;
+		return optional1;
 	}
 	
 	public void setOptional(AttributesType option){
-		optional = option;
+		optional1 = option;
 	}
 }
